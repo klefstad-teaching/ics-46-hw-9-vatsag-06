@@ -32,6 +32,8 @@ vector<int> dijkstra_shortest_path(const Graph &G, int source, vector<int> &prev
 }
 
 vector<int> extract_shortest_path(const vector<int> & d, const vector<int> &previous, int destination) {
+    Graph g;
+    file_to_graph("small.txt", g);
     vector<int> distances = dijkstra_shortest_path(g, 0, previous);
     vector<int> result;
     int i = destination;
