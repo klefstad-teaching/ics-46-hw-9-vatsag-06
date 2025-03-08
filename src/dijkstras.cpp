@@ -32,9 +32,6 @@ vector<int> dijkstra_shortest_path(const Graph &G, int source, vector<int> &prev
 }
 
 vector<int> extract_shortest_path(const vector<int> &distances, const vector<int> &previous, int destination) {
-    Graph g;
-    file_to_graph("small.txt", g);
-    vector<int> previous(g.numVertices, -1);
     vector<int> distances = dijkstra_shortest_path(g, 0, previous);
     vector<int> result;
     int i = destination;
@@ -46,3 +43,11 @@ vector<int> extract_shortest_path(const vector<int> &distances, const vector<int
     return result;
 }
 
+
+void print_path(const vector<int> &v, int total) {
+    for (int i = 0; i < v.size(); i++) {
+        cout << v[i] << " ";
+        cout << endl;
+        cout << "Total cost is " << total << endl;
+    }
+}
