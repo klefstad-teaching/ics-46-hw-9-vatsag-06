@@ -24,6 +24,30 @@ bool edit_distance_within(const std::string &str1, const std::string &str2, int 
         if (ops + abs(int(str1.length()) - int(str2.length())) <= d) {
             return true;
         }
+        else {
+            cout << "reached inner else for" << endl;
+            int incorrect = 0;
+            int i = 0, j = 0;
+            for (int ct = 0; ct < max(str1.size(), str2.size()); ct++) {
+                if (str1[i] == str2[j]) {
+                    i ++;
+                    j ++;
+                    continue;
+                }
+                else {
+                    incorrect++;
+                    if (str1.size() > str2.size()) {
+                        j --;
+                    }
+                    else if (str2.size() > str1.size()) {
+                        i --;
+                    }
+                }
+                i ++;
+                j ++;
+            }
+            return incorrect <= d;
+        }
     }
     return false;
 }
