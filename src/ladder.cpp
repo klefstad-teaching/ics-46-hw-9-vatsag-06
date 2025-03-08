@@ -21,7 +21,7 @@ bool edit_distance_within(const std::string &str1, const std::string &str2, int 
         }
     }
     else if (str1.length() != str2.length()) {
-        if (ops + abs(str1.length() - str2.length()) <= d) {
+        if (ops + abs(int(str1.length()) - int(str2.length())) <= d) {
             return true;
         }
     }
