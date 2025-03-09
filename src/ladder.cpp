@@ -8,7 +8,7 @@ void error(string word1, string word2, string msg) {
     cout << endl << msg << endl << endl;
 }
 
-#define my_assert(e) (std::cout << #e << ((e) ? " passed" : " failed") << std::endl;)
+#define my_assert(e) (std::cout << #e << ((e) ? " passed" : " failed") << std::endl);
 
 void verify_word_ladder() {
     std::set<std::string> word_list;
