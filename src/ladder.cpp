@@ -28,7 +28,8 @@ bool edit_distance_within(const std::string &str1, const std::string &str2, int 
                 matrix[i][j] = matrix[i-1][j-1];
             }
             else {
-                matrix[i][j] = 1 + min({matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1]});
+                int mintemp = min(matrix[i-1][j], matrix[i][j-1]);
+                matrix[i][j] = 1 + min(mintemp, matrix[i-1][j-1]);
             }
         }
     }
