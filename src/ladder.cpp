@@ -37,7 +37,7 @@ bool edit_distance_within(const std::string &str1, const std::string &str2, int 
             else if (j == 0) {
                 matrix[i][j] = i;
             }
-            else if (str1[i] == str2[j]) {
+            else if (str1[i-1] == str2[j-1]) {
                 matrix[i][j] = matrix[i-1][j-1];
             }
             else {
@@ -82,7 +82,6 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
         }
     }
     vector<string> NA;
-    NA.push_back("No word ladder found.");
     return NA;
 }
 
@@ -96,8 +95,8 @@ void load_words(set<string> &word_list, const string &file_name) {
 }
 
 void print_word_ladder(const vector<string> &ladder) {
-    if (ladder[0] == "No word ladder found."){
-        cout << ladder[0];
+    if (ladder.size() == 0){
+        cout << "No word ladder found.";
     }
     else{
         for (int i = 0; i < ladder.size(); i++) {
