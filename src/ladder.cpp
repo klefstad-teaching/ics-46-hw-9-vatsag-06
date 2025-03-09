@@ -82,7 +82,7 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
         }
     }
     vector<string> NA;
-    NA.push_back("No word ladder found.")
+    NA.push_back("No word ladder found.");
     return NA;
 }
 
