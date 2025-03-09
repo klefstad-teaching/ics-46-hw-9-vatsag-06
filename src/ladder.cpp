@@ -8,84 +8,35 @@ void error(string word1, string word2, string msg) {
     cout << endl << msg << endl << endl;
 }
 
+
+
 bool edit_distance_within(const std::string &str1, const std::string &str2, int d) {
-    int ops = 0;
-    for (int i = 0; i < min(str1.length(), str2.length()); i++) {
-        if (str1[i] != str2[i]) {
-            ops++;
-        }
+    int m = str1.length(), n = str2.length();
+    if (abs(int(m-n)) > d) {
+        return false;
     }
-    if (str1.length() == str2.length()) {
-        if (ops <= d) {
-            return true;
-        }
-    }
-    else if (str1.length() != str2.length()) {
-        if (ops + abs(int(str1.length()) - int(str2.length())) <= d) {
-            return true;
-        }
-        else {
-            cout << "reached inner else for" << endl;
-            int incorrect = 0;
-            int i = 0, j = 0;
-            for (int ct = 0; ct < max(str1.size(), str2.size()); ct++) {
-                if (str1[i] == str2[j]) {
-                    i ++;
-                    j ++;
-                    continue;
-                }
-                else {
-                    incorrect++;
-                    if (str1.size() > str2.size()) {
-                        j --;
-                    }
-                    else if (str2.size() > str1.size()) {
-                        i --;
-                    }
-                }
-                i ++;
-                j ++;
+    vector<vector<int>> matrix(m+1, vector<int>(n+1, 0));
+    for (int i = 0; i < m+1; i++) {
+        for (int j = 0; j < n+1; j++) {
+            if (i == 0) {
+                matrix[i][j] = j;
             }
-            return incorrect <= d;
+            else if (j == 0) {
+                matrix[i][j] = i;
+            }
+            else if (str1[i] == str2[j]) {
+                matrix[i][j] = matrix[i-1][j-1];
+            }
+            else {
+                matrix[i][j] = 1 + min(matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1]);
+            }
         }
     }
-    return false;
+    return matrix[m][n] <= d;
 }
 
 bool is_adjacent(const string &word1, const string &word2) {
-    if (!edit_distance_within(word1, word2, 1)) {
-        return false;
-    }
-    if (word1 == word2){
-        return true;
-    }
-    int correct = 0;
-    int i = 0, j = 0;
-    for (int ct = 0; ct < max(word1.size(), word2.size()); ct++) {
-        if (word1[i] == word2[j]) {
-            correct++;
-        }
-        else {
-            if (word1.size() > word2.size()) {
-                i = j + 1;
-                i --;
-                j --;
-            }
-            else if (word2.size() > word1.size()) {
-                j = i + 1;
-                i --;
-                j --;
-            }
-        }
-        i ++;
-        j ++;
-    }
-    if (word1.size() == word2.size()) {
-        return correct == word1.size() - 1;
-    }
-    else {
-        return correct == min(word1.size(), word2.size());
-    }
+    return edit_distance_within(word1, word2, 1);
 }
 
 vector<string> generate_word_ladder(const string &begin_word, const string &end_word, const set<string> &word_list) {
@@ -117,7 +68,6 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
         }
     }
     return Q.front();
-
 }
 
 void load_words(set<string> &word_list, const string &file_name) {
